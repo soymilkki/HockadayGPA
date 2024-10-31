@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Table Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Use a clear and readable font */
+            background-color: #f4f4f4; /* Light background for better contrast */
+            margin: 20px; /* Add some margin around the body */
+        }
+        table {
+            border-collapse: collapse; /* Combine borders for a cleaner look */
+            width: 100%; /* Use full width of the container */
+            margin-bottom: 20px; /* Add space below the table */
+            table-layout: fixed; /* Ensure all columns are the same width */
+        }
+        th, td {
+            border: 1px solid #ddd; /* Light border for clarity */
+            padding: 10px; /* Add padding inside cells */
+            text-align: left; /* Align text to the left by default */
+            overflow: hidden; /* Prevent overflow of text */
+            text-overflow: ellipsis; /* Add ellipsis if text is too long */
+            white-space: nowrap; /* Prevent text from wrapping to a new line */
+        }
+        th {
+            background-color: #4CAF50; /* Darker background for headers */
+            color: white; /* White text for contrast */
+            text-align: center; /* Center align header text */
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light background for even rows */
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Change background on hover */
+        }
+        input {
+            border: none; /* Remove the default border */
+            background-color: transparent; /* Make the background transparent */
+            width: 100%; /* Make the input take up the full width of the cell */
+            text-align: left; /* Align text to the left */
+            font-family: inherit; /* Use the same font as the table */
+            font-size: inherit; /* Use the same font size as the table */
+        }
+        button {
+            margin-top: 20px; /* Add some margin above the button */
+            padding: 10px 20px; /* Add padding to the button */
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            cursor: pointer; /* Change cursor on hover */
+            font-size: 16px; /* Increase font size */
+        }
+        #averageGPA {
+            margin-top: 20px; /* Add some margin above the average GPA display */
+            font-size: 18px; /* Increase font size for visibility */
+            font-weight: bold; /* Make the text bold */
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="color: black; text-align: center;">Hockaday GPA Calculator</h2>
+
+<table id="gradeTable">
+    <tr>
+        <th>Course</th>
+        <th>Letter Grade</th>
+        <th>Credits</th>
+        <th>Grade Point Average</th>
+    </tr>
+    <tr>
+        <td>Math</td>
+        <td><input type="text" value="A"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+    <tr>
+        <td>Science</td>
+        <td><input type="text" value="B"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+    <tr>
+        <td>English</td>
+        <td><input type="text" value="A"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+    <tr>
+        <td>History</td>
+        <td><input type="text" value="C"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+    <tr>
+        <td>Language Class</td>
+        <td><input type="text" value="B+"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+    <tr>
+        <td>Fine Arts</td>
+        <td><input type="text" value="A-"></td> <!-- Editable letter grade input -->
+        <td><input type="text" value="3"></td> <!-- Editable credit input -->
+        <td><span class="numeric"></span></td> <!-- Span for numeric value -->
+    </tr>
+</table>
+
+<button onclick="convertGrades()">Convert Grades!</button>
+<button onclick="averageMe()">Calculate GPA!</button>
+
+<div id="averageGPA"></div> <!-- Placeholder for average GPA display -->
+
+<script>
+    function convertGrades() {
+        const rows = document.querySelectorAll("#gradeTable tr"); // Select all rows in the table
+
+        for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+            const gradeInput = rows[i].querySelector("input[type='text']").value; // Get the grade input value
+            const numericSpan = rows[i].querySelector(".numeric"); // Select the span for numeric value
+
+            // Convert letter grades to numeric values
+            let numericValue;
+            switch (gradeInput.toUpperCase()) { // Convert to uppercase for consistency
+                case 'A+':
+                    numericValue = 4.3;
+                    break;
+                case 'A':
+                    numericValue = 4.0;
+                    break;
+                case 'A-':
+                    numericValue = 3.7;
+                    break;
+                case 'B+':
+                    numericValue = 3.3;
+                    break;
+                case 'B':
+                    numericValue = 3.0;
+                    break;
+                case 'B-':
+                    numericValue = 2.7;
+                    break;
+                case 'C+':
+                    numericValue = 2.3;
+                    break;
+                case 'C':
+                    numericValue = 2.0;
+                    break;
+                case 'C-':
+                    numericValue = 1.7;
+                    break;
+                case 'D+':
+                    numericValue = 1.3;
+                    break;
+                case 'D':
+                    numericValue = 1.0;
+                    break;
+                case 'D-':
+                    numericValue = 0.7;
+                    break;
+                case 'F':
+                    numericValue = 0.0;
+                    break;
+                default:
+                    numericValue = "Invalid Grade"; // Handle invalid input
+                    break;
+            }
+            numericSpan.textContent = numericValue; // Update the numeric value in the span
+        }
+    }
+
+    function averageMe() {
+        const rows = document.querySelectorAll("#gradeTable tr"); // Select all rows in the table
+        let total = 0; // Initialize total
+        let count = 0; // Initialize count
+
+        for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+            const numericValue = rows[i].querySelector(".numeric").textContent; // Get the numeric value from the span
+            const value = parseFloat(numericValue); // Convert it to a float
+
+            if (!isNaN(value)) { // Check if the value is a valid number
+                total += value; // Add to total
+                count++; // Increment count
+            }
+        }
+
+        const average = count > 0 ? (total / count).toFixed(2) : 0; // Calculate average
+        document.getElementById('averageGPA').textContent = `Average GPA: ${average}`; // Display average
+    }
+</script>
+
+</body>
+</html>
